@@ -206,6 +206,11 @@ useExtensionMessage('data-updated', (payload) => {
 - [ADR-002: Webview Tech Stack](docs/adr/ADR-002-webview-tech-stack.md)
 - [ADR-003: Communication Protocol](docs/adr/ADR-003-communication-protocol.md)
 
+## Author
+
+This project and its VS Code extensions are authored and maintained by [namewta](https://github.com/NAMEWTA).
+All release, publisher, and repository-related metadata should consistently use `namewta` as the author identity.
+
 ## License
 
 MIT — [namewta](https://github.com/NAMEWTA)
