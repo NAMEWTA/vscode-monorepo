@@ -36,7 +36,7 @@
     "lint": "eslint src/ webview/",
     "clean": "node -e \"const fs=require('fs');fs.rmSync('dist',{recursive:true,force:true})\"",
     "package": "npx @vscode/vsce package --no-dependencies",
-    "prepublish": "npm run build"
+    "vscode:prepublish": "npm run build"
   },
   "dependencies": {
     "@vscode-monorepo/shared-types": "*",
