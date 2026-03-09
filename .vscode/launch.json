@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Template Plugin",
+      "type": "extensionHost",
+      "request": "launch",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceFolder}/apps/template-plugin"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/apps/template-plugin/dist/**/*.js"
+      ],
+      "preLaunchTask": "npm: build - apps/template-plugin"
+    }
+  ]
+}

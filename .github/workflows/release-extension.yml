@@ -1,0 +1,113 @@
+name: Release VS Code Extension
+
+on:
+  push:
+    tags:
+      - '*/v*.*.*'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Build and release tagged extension
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Parse release tag
+        id: parse
+        shell: bash
+        run: |
+          tag="${GITHUB_REF_NAME}"
+
+          if [[ ! "$tag" =~ ^([^/]+)/v([0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?)$ ]]; then
+            echo "Invalid tag format: $tag"
+            echo "Expected format: project-name/v1.2.3"
+            exit 1
+          fi
+
+          app_name="${BASH_REMATCH[1]}"
+          version="${BASH_REMATCH[2]}"
+          app_dir="apps/${app_name}"
+          package_file="${app_dir}/package.json"
+
+          if [[ ! -f "$package_file" ]]; then
+            echo "No app package found for ${app_name} at ${package_file}"
+            exit 1
+          fi
+
+          echo "app_name=${app_name}" >> "$GITHUB_OUTPUT"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          echo "app_dir=${app_dir}" >> "$GITHUB_OUTPUT"
+          echo "package_file=${package_file}" >> "$GITHUB_OUTPUT"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Update app version from tag
+        env:
+          PACKAGE_FILE: ${{ steps.parse.outputs.package_file }}
+          RELEASE_VERSION: ${{ steps.parse.outputs.version }}
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+
+          const packageFile = process.env.PACKAGE_FILE;
+          const releaseVersion = process.env.RELEASE_VERSION;
+          const packageJson = JSON.parse(fs.readFileSync(packageFile, 'utf8'));
+
+          packageJson.version = releaseVersion;
+
+          fs.writeFileSync(packageFile, `${JSON.stringify(packageJson, null, 2)}\n`);
+          console.log(`Updated ${packageJson.name} version to ${releaseVersion}`);
+          NODE
+
+      - name: Package tagged extension
+        run: npm run package --workspace "${{ steps.parse.outputs.app_dir }}"
+
+      - name: Locate VSIX artifact
+        id: artifact
+        shell: bash
+        env:
+          APP_DIR: ${{ steps.parse.outputs.app_dir }}
+        run: |
+          shopt -s nullglob
+          files=("$APP_DIR"/*.vsix)
+
+          if [[ "${#files[@]}" -eq 0 ]]; then
+            echo "No VSIX artifact found in ${APP_DIR}"
+            exit 1
+          fi
+
+          if [[ "${#files[@]}" -gt 1 ]]; then
+            printf 'Expected exactly one VSIX artifact in %s, found:\n' "$APP_DIR"
+            printf ' - %s\n' "${files[@]}"
+            exit 1
+          fi
+
+          echo "vsix_path=${files[0]}" >> "$GITHUB_OUTPUT"
+
+      - name: Publish GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ steps.parse.outputs.app_name }} v${{ steps.parse.outputs.version }}
+          files: ${{ steps.artifact.outputs.vsix_path }}
+          generate_release_notes: true
+          prerelease: ${{ contains(steps.parse.outputs.version, '-') }}
+          overwrite_files: true
+          fail_on_unmatched_files: true

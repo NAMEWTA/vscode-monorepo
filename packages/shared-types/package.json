@@ -1,0 +1,38 @@
+{
+  "name": "@vscode-monorepo/shared-types",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Shared TypeScript type definitions for VS Code extensions",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./webview": {
+      "types": "./dist/webview.d.ts",
+      "import": "./dist/webview.js"
+    },
+    "./message": {
+      "types": "./dist/message.d.ts",
+      "import": "./dist/message.js"
+    },
+    "./extension": {
+      "types": "./dist/extension.d.ts",
+      "import": "./dist/extension.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "dev": "tsc --project tsconfig.json --watch",
+    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "clean": "node -e \"const fs=require('fs');fs.rmSync('dist',{recursive:true,force:true})\""
+  },
+  "devDependencies": {
+    "@vscode-monorepo/tsconfig": "*",
+    "typescript": "^5.7.0"
+  }
+}

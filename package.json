@@ -1,0 +1,32 @@
+{
+  "name": "vscode-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "description": "VS Code Extensions Monorepo — React 19 + Ant Design 6.x + TypeScript",
+  "author": "namewta",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "clean": "turbo run clean",
+    "package": "turbo run package",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,mjs,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mjs,json,md}\"",
+    "new-extension": "node scripts/create-extension.mjs"
+  },
+  "devDependencies": {
+    "turbo": "^2.3.0",
+    "prettier": "^3.4.0",
+    "typescript": "^5.7.0"
+  }
+}

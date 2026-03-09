@@ -1,0 +1,11 @@
+{
+  "name": "@vscode-monorepo/tsconfig",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Shared TypeScript configurations for the VS Code extensions monorepo",
+  "files": [
+    "base.json",
+    "node.json",
+    "react.json"
+  ]
+}

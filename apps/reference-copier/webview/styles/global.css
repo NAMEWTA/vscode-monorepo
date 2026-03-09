@@ -1,0 +1,48 @@
+/* Webview base styles — reset & VS Code integration */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: auto;
+  font-family: var(--vscode-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+  font-size: var(--vscode-font-size, 13px);
+  color: var(--vscode-foreground, #cccccc);
+  background-color: var(--vscode-editor-background, #1e1e1e);
+}
+
+#root {
+  min-height: 100%;
+}
+
+a {
+  color: var(--vscode-textLink-foreground, #3794ff);
+}
+
+a:hover {
+  color: var(--vscode-textLink-activeForeground, #3794ff);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--vscode-scrollbarSlider-background);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--vscode-scrollbarSlider-hoverBackground);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}

@@ -1,0 +1,83 @@
+{
+  "name": "reference-copier",
+  "displayName": "Reference Copier",
+  "description": "Copy workspace-relative file, folder, and selection references for LLM-friendly pasting.",
+  "version": "0.0.1",
+  "publisher": "namewta",
+  "author": {
+    "name": "namewta",
+    "url": "https://github.com/NAMEWTA"
+  },
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:referenceCopier.copyReference",
+    "onCommand:referenceCopier.copyExplorerReference"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "referenceCopier.copyReference",
+        "title": "Copy Relative Reference from Editor",
+        "category": "Reference Copier"
+      },
+      {
+        "command": "referenceCopier.copyExplorerReference",
+        "title": "Copy Relative Reference from Explorer",
+        "category": "Reference Copier"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "referenceCopier.copyReference",
+          "group": "navigation@100",
+          "when": "editorTextFocus"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "referenceCopier.copyExplorerReference",
+          "group": "navigation@100",
+          "when": "filesExplorerFocus"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "referenceCopier.copyReference",
+        "key": "ctrl+alt+shift+c",
+        "when": "editorTextFocus"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "npm run build:extension",
+    "build:extension": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --sourcemap --minify",
+    "dev": "npm run dev:extension",
+    "dev:extension": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --sourcemap --watch",
+    "typecheck": "tsc --noEmit --project tsconfig.json",
+    "lint": "eslint src/",
+    "clean": "node -e \"const fs=require('fs');fs.rmSync('dist',{recursive:true,force:true})\"",
+    "package": "npx @vscode/vsce package --no-dependencies",
+    "prepublish": "npm run build"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.96.0",
+    "eslint": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "@vscode-monorepo/tsconfig": "*",
+    "typescript": "^5.7.0",
+    "esbuild": "^0.24.0"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "@vscode-monorepo/eslint-config",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Shared ESLint configuration for the VS Code extensions monorepo",
+  "type": "module",
+  "main": "./index.mjs",
+  "exports": {
+    ".": "./index.mjs",
+    "./react": "./react.mjs"
+  },
+  "files": [
+    "index.mjs",
+    "react.mjs"
+  ],
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.37.0",
+    "eslint-plugin-react-hooks": "^5.0.0"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "@vscode-monorepo/shared-utils",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Shared utility functions for VS Code extensions",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "dev": "tsc --project tsconfig.json --watch",
+    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "clean": "node -e \"const fs=require('fs');fs.rmSync('dist',{recursive:true,force:true})\""
+  },
+  "devDependencies": {
+    "@vscode-monorepo/tsconfig": "*",
+    "typescript": "^5.7.0"
+  }
+}

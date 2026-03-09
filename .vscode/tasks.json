@@ -1,0 +1,32 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "build",
+      "path": "apps/template-plugin",
+      "group": "build",
+      "label": "npm: build - apps/template-plugin",
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "type": "npm",
+      "script": "dev",
+      "path": "apps/template-plugin",
+      "group": "build",
+      "label": "npm: dev - apps/template-plugin",
+      "isBackground": true,
+      "problemMatcher": ["$tsc-watch"]
+    },
+    {
+      "label": "Build All",
+      "type": "shell",
+      "command": "npm run build",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$tsc"]
+    }
+  ]
+}

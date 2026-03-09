@@ -1,0 +1,61 @@
+{
+  "name": "template-plugin",
+  "displayName": "Template Plugin",
+  "description": "VS Code extension template — React 19 + Ant Design 6.x webview",
+  "version": "0.0.1",
+  "publisher": "namewta",
+  "author": {
+    "name": "namewta",
+    "url": "https://github.com/NAMEWTA"
+  },
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "templatePlugin.showPanel",
+        "title": "Show Panel",
+        "category": "Template Plugin"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "npm run build:extension && npm run build:webview",
+    "build:extension": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --sourcemap --minify",
+    "build:webview": "esbuild webview/index.tsx --bundle --outfile=dist/webview/index.js --format=iife --platform=browser --sourcemap --minify --loader:.tsx=tsx --loader:.ts=ts --loader:.css=css",
+    "dev": "concurrently \"npm run dev:extension\" \"npm run dev:webview\"",
+    "dev:extension": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --sourcemap --watch",
+    "dev:webview": "esbuild webview/index.tsx --bundle --outfile=dist/webview/index.js --format=iife --platform=browser --sourcemap --watch --loader:.tsx=tsx --loader:.ts=ts --loader:.css=css",
+    "typecheck": "tsc --noEmit --project tsconfig.json && tsc --noEmit --project tsconfig.webview.json",
+    "lint": "eslint src/ webview/",
+    "clean": "node -e \"const fs=require('fs');fs.rmSync('dist',{recursive:true,force:true})\"",
+    "package": "npx @vscode/vsce package --no-dependencies",
+    "prepublish": "npm run build"
+  },
+  "dependencies": {
+    "@vscode-monorepo/shared-types": "*",
+    "@vscode-monorepo/shared-utils": "*",
+    "@vscode-monorepo/vscode-utils": "*",
+    "@vscode-monorepo/webview-bridge": "*",
+    "@vscode-monorepo/shared-ui": "*"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.96.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vscode-monorepo/eslint-config": "*",
+    "@vscode-monorepo/tsconfig": "*",
+    "antd": "^6.0.0",
+    "concurrently": "^9.0.0",
+    "esbuild": "^0.24.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typescript": "^5.7.0"
+  }
+}

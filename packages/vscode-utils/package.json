@@ -1,0 +1,43 @@
+{
+  "name": "@vscode-monorepo/vscode-utils",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Reusable VS Code API utility wrappers for extension development",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./webview-panel": {
+      "types": "./dist/webview-panel.d.ts",
+      "import": "./dist/webview-panel.js"
+    },
+    "./commands": {
+      "types": "./dist/commands.d.ts",
+      "import": "./dist/commands.js"
+    },
+    "./config": {
+      "types": "./dist/config.d.ts",
+      "import": "./dist/config.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "dev": "tsc --project tsconfig.json --watch",
+    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "clean": "node -e \"const fs=require('fs');fs.rmSync('dist',{recursive:true,force:true})\""
+  },
+  "dependencies": {
+    "@vscode-monorepo/shared-types": "*",
+    "@vscode-monorepo/webview-bridge": "*"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.96.0",
+    "@vscode-monorepo/tsconfig": "*",
+    "typescript": "^5.7.0"
+  }
+}
