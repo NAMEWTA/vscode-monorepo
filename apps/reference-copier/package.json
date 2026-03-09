@@ -8,6 +8,11 @@
     "name": "namewta",
     "url": "https://github.com/NAMEWTA"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NAMEWTA/vscode-monorepo.git",
+    "directory": "apps/reference-copier"
+  },
   "license": "MIT",
   "private": true,
   "type": "module",
