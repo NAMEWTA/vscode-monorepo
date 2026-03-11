@@ -12,6 +12,31 @@
         "${workspaceFolder}/apps/template-plugin/dist/**/*.js"
       ],
       "preLaunchTask": "npm: build - apps/template-plugin"
+    },
+    {
+      "name": "Run Asset Manager",
+      "type": "extensionHost",
+      "request": "launch",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceFolder}/apps/asset-manager-plugin"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/apps/asset-manager-plugin/dist/**/*.js",
+        "${workspaceFolder}/apps/asset-manager-plugin/dist/**/*.cjs"
+      ],
+      "preLaunchTask": "npm: build - apps/asset-manager-plugin"
+    },
+    {
+      "name": "Run Reference Copier",
+      "type": "extensionHost",
+      "request": "launch",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceFolder}/apps/reference-copier"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/apps/reference-copier/dist/**/*.js"
+      ],
+      "preLaunchTask": "npm: build - apps/reference-copier"
     }
   ]
 }

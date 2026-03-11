@@ -22,6 +22,10 @@
     "./extension": {
       "types": "./dist/extension.d.ts",
       "import": "./dist/extension.js"
+    },
+    "./asset-manager": {
+      "types": "./dist/asset-manager.d.ts",
+      "import": "./dist/asset-manager.js"
     }
   },
   "files": ["dist"],

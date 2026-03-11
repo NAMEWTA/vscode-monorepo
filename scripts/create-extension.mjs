@@ -66,5 +66,6 @@ console.log(`\nNext steps:`);
 console.log(`  1. cd apps/${name}`);
 console.log(`  2. Update package.json with your extension details`);
 console.log(`  3. Update src/extension.ts with your command prefix`);
-console.log(`  4. Run: npm install (from monorepo root)`);
-console.log(`  5. Run: npm run dev (from monorepo root)`);
+console.log(`  4. If you add file persistence, store it under ~/.vscode-namewta/${name}/`);
+console.log(`  5. Run: npm install (from monorepo root)`);
+console.log(`  6. Run: npm run dev (from monorepo root)`);

@@ -1,0 +1,97 @@
+{
+  "name": "asset-manager-plugin",
+  "displayName": "Asset Manager",
+  "description": "VS Code extension: Asset Manager",
+  "version": "0.0.1",
+  "publisher": "namewta",
+  "author": {
+    "name": "namewta",
+    "url": "https://github.com/NAMEWTA"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NAMEWTA"
+  },
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:assetManager.sidebar",
+    "onCommand:assetManager.showPanel",
+    "onCommand:assetManager.openStorageDirectory"
+  ],
+  "main": "./dist/extension.cjs",
+  "contributes": {
+    "commands": [
+      {
+        "command": "assetManager.showPanel",
+        "title": "Show Asset Manager",
+        "category": "Asset Manager"
+      },
+      {
+        "command": "assetManager.openStorageDirectory",
+        "title": "Open Storage Directory",
+        "category": "Asset Manager"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "assetManager",
+          "title": "Asset Manager",
+          "icon": "resources/asset-manager.svg"
+        }
+      ]
+    },
+    "views": {
+      "assetManager": [
+        {
+          "type": "webview",
+          "id": "assetManager.sidebar",
+          "name": "Asset Manager"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "build": "npm run clean && npm run build:deps && npm run build:extension && npm run build:webview",
+    "build:deps": "npm run build --workspace @vscode-monorepo/shared-types && npm run build --workspace @vscode-monorepo/shared-utils && npm run build --workspace @vscode-monorepo/webview-bridge && npm run build --workspace @vscode-monorepo/vscode-utils && npm run build --workspace @vscode-monorepo/shared-ui",
+    "build:extension": "esbuild src/extension.ts --bundle --outfile=dist/extension.cjs --external:vscode --format=cjs --platform=node --sourcemap --minify",
+    "build:webview": "esbuild webview/index.tsx --bundle --outfile=dist/webview/index.js --format=iife --platform=browser --sourcemap --minify --loader:.tsx=tsx --loader:.ts=ts --loader:.css=css",
+    "dev": "concurrently \"npm run dev:extension\" \"npm run dev:webview\"",
+    "dev:extension": "esbuild src/extension.ts --bundle --outfile=dist/extension.cjs --external:vscode --format=cjs --platform=node --sourcemap --watch",
+    "dev:webview": "esbuild webview/index.tsx --bundle --outfile=dist/webview/index.js --format=iife --platform=browser --sourcemap --watch --loader:.tsx=tsx --loader:.ts=ts --loader:.css=css",
+    "typecheck": "tsc --noEmit --project tsconfig.json && tsc --noEmit --project tsconfig.webview.json",
+    "lint": "eslint src/ webview/",
+    "clean": "node -e \"const fs=require('fs');fs.rmSync('dist',{recursive:true,force:true})\"",
+    "package": "npx @vscode/vsce package --no-dependencies",
+    "vscode:prepublish": "npm run build"
+  },
+  "dependencies": {
+    "@vscode-monorepo/shared-types": "*",
+    "@vscode-monorepo/shared-utils": "*",
+    "@vscode-monorepo/vscode-utils": "*",
+    "@vscode-monorepo/webview-bridge": "*",
+    "@vscode-monorepo/shared-ui": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/vscode": "^1.96.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vscode-monorepo/eslint-config": "*",
+    "@vscode-monorepo/tsconfig": "*",
+    "antd": "^6.0.0",
+    "concurrently": "^9.0.0",
+    "esbuild": "^0.24.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typescript": "^5.7.0"
+  }
+}

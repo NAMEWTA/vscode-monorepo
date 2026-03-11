@@ -1,0 +1,9 @@
+{
+  "extends": "@vscode-monorepo/tsconfig/react.json",
+  "compilerOptions": {
+    "outDir": "./dist/webview",
+    "rootDir": "./webview",
+    "baseUrl": "."
+  },
+  "include": ["webview"]
+}

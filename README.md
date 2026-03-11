@@ -109,6 +109,22 @@ npm run new-extension -- --name my-plugin --display "My Plugin"
 
 This copies `apps/template-plugin` → `apps/my-plugin` and updates the manifest.
 
+## Persistent Storage Convention
+
+For this monorepo, all file-based persistence created by extensions should be organized under:
+
+```bash
+~/.vscode-namewta/<project-name>/
+```
+
+Guidelines:
+
+- `<project-name>` should match the extension project folder under `apps/*`.
+- Treat this as the root directory for extension-managed persistent files, caches, snapshots, and other local data that you write yourself.
+- Keep each extension inside its own subdirectory so persistent data stays isolated and easy to inspect, migrate, back up, or remove.
+
+This is a repository convention for extensions built from this project, intended to make persistent files easier to manage consistently.
+
 ## Development Workflow
 
 ### 1. Build & Debug

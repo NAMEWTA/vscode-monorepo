@@ -8,6 +8,20 @@ This repository is a VS Code extensions monorepo built with npm workspaces and T
 
 The reference implementation is `apps/template-plugin`, which shows the intended architecture for new extensions: a Node-based extension host entrypoint plus a React 19 + Ant Design 6 webview bundled with esbuild.
 
+## Repository metadata baseline
+
+Unless the user explicitly overrides it for a specific task, all repository metadata under this monorepo should use the following canonical values:
+
+- author: `namewta`
+- repository URL: `https://github.com/NAMEWTA`
+
+Apply this baseline consistently when editing or generating metadata such as:
+
+- `package.json` `author`
+- `package.json` `repository`
+- license ownership text
+- release and publishing metadata
+
 ## Development commands
 
 Root tooling requires Node.js >= 20 and npm >= 10 (`package.json:8`).
@@ -145,6 +159,22 @@ After scaffolding, expect to update:
 - the command IDs/category in the new extension package
 - `src/extension.ts`
 - webview UI and message types
+
+### 7. File-based persistence root is standardized
+
+For extensions built from this monorepo, the repository convention is to place extension-managed persistent files under:
+
+```bash
+~/.vscode-namewta/<project-name>/
+```
+
+Guidance:
+
+- `<project-name>` should match the extension project folder in `apps/*`
+- use this root for file-based data your extension writes and manages directly
+- keep data isolated per extension so inspection, cleanup, migration, and backup stay straightforward
+
+If you are adding persistence to an extension, follow this directory convention instead of scattering files across unrelated locations.
 
 ## Build system notes
 
